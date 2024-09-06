@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 // src/TodoCard.jsx
 
 
 function TodoCard({ todo, onChangeStatus, onEdit, onDelete }) {
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 flex justify-between items-center">
+    <div className="bg-transparent shadow-md rounded-lg p-4 flex justify-between items-center mb-2 border-y-2 ">
       <div>
         <h2 className="text-xl font-semibold">{todo.text}</h2>
         <p className={`mt-2 ${todo.completed ? 'text-green-500' : 'text-red-500'}`}>

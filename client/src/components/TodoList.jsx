@@ -1,5 +1,5 @@
 // src/TodoList.jsx
-import React from 'react';
+
 import { useQuery, gql } from '@apollo/client';
 import TodoCard from './TodoCard';
 
