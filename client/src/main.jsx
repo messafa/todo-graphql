@@ -9,20 +9,17 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
-client
-  .query({
-    query: gql`
-      query GetLocations {
-        locations {
-          id
-          name
-          description
-          photo
-        }
+client.query({
+  query: gql`
+    query GetTodos {
+      getTodos {
+        id
+        text
+        completed
       }
-    `,
-  })
-  .then((result) => console.log(result));
+    }
+  `
+}).then(result => console.log(result))
 
 
 createRoot(document.getElementById('root')).render(

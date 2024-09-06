@@ -1,38 +1,17 @@
-import { useQuery, gql } from '@apollo/client';
+
+import TodoList from './components/TodoList';
 
 
 function App() {
 
-  const { loading, error, data } = useQuery(gql`
-    query GetLocations {
-      locations {
-        id
-        name
-        description
-        photo
-      }
-    }
-  `);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <>Error :
-    <pre>{JSON.stringify(error, null, 2)}</pre>
-  </>;
-
-  console.log(data);
 
   return (
     <>
-      <h1>Locations</h1>
-      <ul>
-        {data.locations.map(location => (
-          <li key={location.id}>
-            <h2>{location.name}</h2>
-            <p>{location.description}</p>
-            <img src={location.photo} alt={location.name} />
-          </li>
-        ))}
-      </ul>
+      <div className="container mx-auto p-4">
+        <h1 className="text-3xl font-bold text-center">Todo List</h1>
+        <TodoList />
+      </div>
     </>
   )
 }
