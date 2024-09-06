@@ -1,4 +1,4 @@
-import { gql } from 'graphql-tag';
+const  { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type Todo {
@@ -18,5 +18,4 @@ const typeDefs = gql`
   }
 `;
 
-
-export default typeDefs;
+module.exports = typeDefs;
