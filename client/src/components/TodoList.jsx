@@ -1,7 +1,8 @@
 // src/TodoList.jsx
 
 import { useQuery, gql } from '@apollo/client';
-import TodoCard from './TodoCard';
+// import TodoCard from './TodoCard';
+import BoxComponent from './BoxComponent';
 
 const GET_TODOS = gql`
   query GetTodos {
@@ -34,8 +35,14 @@ const TodoList = () => {
   return (
     <div className="p-8">
       {data.getTodos.map((todo) => (
-        <TodoCard
-          key={todo.id}
+        // <TodoCard
+          // key={todo.id}
+          // todo={todo}
+          // onChangeStatus={handleChangeStatus}
+          // onEdit={handleEdit}
+          // onDelete={handleDelete}
+        // />
+        <BoxComponent key={todo.id}
           todo={todo}
           onChangeStatus={handleChangeStatus}
           onEdit={handleEdit}
