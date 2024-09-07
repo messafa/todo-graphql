@@ -25,6 +25,14 @@ const resolvers = {
         todos.splice(index, 1);
         return true;
       },
+      changeTodoStatus: (_, { id }) => {
+        const index = todos.findIndex(todo => todo.id === id);
+        if (index !== -1) {
+          todos[index].completed = !todos[index].completed;
+          return todos[index];
+        }
+        return null
+    },
     },
   };
 

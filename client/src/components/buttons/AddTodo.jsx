@@ -11,6 +11,12 @@ const ADD_TODO = gql`
   }
 `;
 
+// mutation AddTodo($text: String!) {
+//   addTodo(text: $text) {
+    
+//   }
+// }
+
 const GET_TODOS = gql`
   query GetTodos {
     getTodos {
