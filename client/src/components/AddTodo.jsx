@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
 
 const ADD_TODO = gql`
@@ -11,9 +11,31 @@ const ADD_TODO = gql`
   }
 `;
 
+const GET_TODOS = gql`
+  query GetTodos {
+    getTodos {
+      id
+      text
+      completed
+    }
+  }
+`;
+
 const AddTodo = () => {
   const [text, setText] = useState('');
-  const [addTodo, { loading, error }] = useMutation(ADD_TODO);
+  const [addTodo, { loading, error }] = useMutation(ADD_TODO, {
+    // Update cache after successful mutation
+    update(cache, { data: { addTodo } }) {
+      const existingTodos = cache.readQuery({ query: GET_TODOS });
+
+      cache.writeQuery({
+        query: GET_TODOS,
+        data: {
+          getTodos: [...existingTodos.getTodos, addTodo],
+        },
+      });
+    }
+  });
 
   const handleValueChange = (e) => {
     setText(e.target.value);
