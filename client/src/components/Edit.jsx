@@ -12,9 +12,9 @@ const EDIT_TODO_TEXT = gql`
   }
 `;
 
-const Edit = ({ todoId, currentText }) => {
+const Edit = ({ todo }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newText, setNewText] = useState(currentText);
+  const [newText, setNewText] = useState(todo.text);
   const [editTodoText] = useMutation(EDIT_TODO_TEXT);
 
   const openModal = () => setIsModalOpen(true);
@@ -26,7 +26,7 @@ const Edit = ({ todoId, currentText }) => {
       return;
     }
     try {
-      await editTodoText({ variables: { id: todoId, text: newText } });
+      await editTodoText({ variables: { id: todo.id, text: newText } });
       closeModal(); // أغلق الـ modal بعد الحفظ
     } catch (error) {
       console.error('Error updating todo:', error);
@@ -44,7 +44,7 @@ const Edit = ({ todoId, currentText }) => {
         <Pencil size={16} />
       </button>
 
-      {/* شاشة منبثقة */}
+
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-8 rounded-lg shadow-lg w-1/2">

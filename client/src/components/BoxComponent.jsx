@@ -59,7 +59,7 @@ const TodoCard = ({ todo, onChangeStatus, onEdit, onDelete }) => {
         </p>
       </div>
       <div className="flex justify-center space-x-2">
-        <Edit id={todo.id} />
+        <Edit todo={todo} />
         
         <Delete id={todo.id} />
         
