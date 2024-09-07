@@ -2,9 +2,19 @@ import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { Pencil } from "lucide-react";
 
+const GET_TODOS = gql`
+  query GetTodos {
+    getTodos {
+      id
+      text
+      completed
+    }
+  }
+`;
+
 const EDIT_TODO_TEXT = gql`
-  mutation EditTodoText($id: ID!, $text: String!) {
-    editTodoText(id: $id, text: $text) {
+  mutation UpdateTodo($updateTodoId: Int!, $text: String!, $completed: Boolean!) {
+    updateTodo(id: $updateTodoId, text: $text, completed: $completed) {
       id
       text
       completed
@@ -15,27 +25,45 @@ const EDIT_TODO_TEXT = gql`
 const Edit = ({ todo }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newText, setNewText] = useState(todo.text);
-  const [editTodoText] = useMutation(EDIT_TODO_TEXT);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const [updateTodo] = useMutation(EDIT_TODO_TEXT, {
+    update(cache, { data: { updateTodo } }) {
+      const existingTodos = cache.readQuery({ query: GET_TODOS });
+      cache.writeQuery({
+        query: GET_TODOS,
+        data: {
+          getTodos: existingTodos.getTodos.map((t) =>
+            t.id === updateTodo.id ? updateTodo : t
+          ),
+        },
+      });
+      closeModal();
+    },
+    onError(error) {
+      console.error("Error updating todo:", error);
+    }
+  });
 
-  const handleSave = async () => {
-    if (!newText.trim()) {
-      alert('Text cannot be empty');
-      return;
-    }
-    try {
-      await editTodoText({ variables: { id: todo.id, text: newText } });
-      closeModal(); // أغلق الـ modal بعد الحفظ
-    } catch (error) {
-      console.error('Error updating todo:', error);
-    }
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSave = () => {
+    updateTodo({
+      variables: {
+        updateTodoId: todo.id,
+        text: newText,
+        completed: todo.completed // Ensure this is set correctly
+      },
+    });
   };
 
   return (
     <>
-      {/* زر التعديل */}
       <button
         onClick={openModal}
         className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
@@ -43,7 +71,6 @@ const Edit = ({ todo }) => {
       >
         <Pencil size={16} />
       </button>
-
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
@@ -75,4 +102,4 @@ const Edit = ({ todo }) => {
   );
 };
 
-export default Edit;
+export default Edit;
