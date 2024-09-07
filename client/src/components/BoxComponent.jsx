@@ -2,9 +2,9 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import {  ChevronDown, ChevronUp } from "lucide-react";
-import Status from "./Status";
-import Delete from "./Delete";
-import Edit from "./Edit";
+import Status from "./buttons/Status";
+import Delete from "./buttons/Delete";
+import Edit from "./buttons/Edit";
 
 const TodoCard = ({ todo, onChangeStatus, onEdit, onDelete }) => {
   const [isExpanded, setIsExpanded] = useState(false);
