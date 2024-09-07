@@ -1,6 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { Pencil, Trash2, RefreshCw, ChevronDown, ChevronUp } from "lucide-react";
+import {  ChevronDown, ChevronUp } from "lucide-react";
+import Status from "./Status";
+import Delete from "./Delete";
+import Edit from "./Edit";
 
 const TodoCard = ({ todo, onChangeStatus, onEdit, onDelete }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -55,27 +59,11 @@ const TodoCard = ({ todo, onChangeStatus, onEdit, onDelete }) => {
         </p>
       </div>
       <div className="flex justify-center space-x-2">
-        <button
-          onClick={handleEdit}
-          className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-          aria-label="Edit"
-        >
-          <Pencil size={16} />
-        </button>
-        <button
-          onClick={onDelete}
-          className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
-          aria-label="Delete"
-        >
-          <Trash2 size={16} />
-        </button>
-        <button
-          onClick={onChangeStatus}
-          className="p-2 bg-green-500 text-white rounded-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
-          aria-label="Change Status"
-        >
-          <RefreshCw size={16} />
-        </button>
+        <Edit id={todo.id} />
+        
+        <Delete id={todo.id} />
+        
+        <Status id={todo.id} Status={todo.completed}  />
       </div>
     </div>
     </>
