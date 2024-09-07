@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { Pencil } from "lucide-react";
