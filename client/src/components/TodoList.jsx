@@ -12,13 +12,7 @@ const GET_TODOS = gql`
   }
 `;
 
-// query Query {
-//   getTodos {
-//     completed
-//     id
-//     text
-//   }
-// }
+
 
 const UPDATE_TODO_STATUS = gql`
   mutation UpdateTodoStatus($id: ID!, $completed: Boolean!) {
